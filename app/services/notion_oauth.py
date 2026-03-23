@@ -70,7 +70,6 @@ class OAuthCallbackServer:
         self.port = port
         self.event = threading.Event()
         self.params: dict[str, str] = {}
-        self.error: Exception | None = None
         self._server = ThreadingHTTPServer((host, port), self._make_handler())
         self._thread = threading.Thread(target=self._server.serve_forever, daemon=True)
 

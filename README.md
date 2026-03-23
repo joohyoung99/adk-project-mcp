@@ -1,6 +1,6 @@
 # ADK Notion MCP CLI
 
-Google ADK로 만든 CLI 챗봇이다.
+Google ADK로 만든 CLI 챗봇입니다.
 
 - `filesystem MCP`
 - `Notion MCP (Streamable HTTP + OAuth)`
@@ -32,6 +32,41 @@ python3 main.py login-notion
 ```bash
 python3 main.py
 ```
+
+예시 질문
+  - 노션에 강화학습 세미나 페이지 내용 요약해서 로컬로 저장해줘
+  - 노션에서 강화학습 세미나 관련 내용 찾아서 요약해줘
+  - 노션 내용과 로컬 파일을 같이 비교해서 통합 정리해줘
+  - 노션 강화학습 내용 정리해서 markdown 파일로 저장해줘
+
+## 에이전트 구조
+
+```text
+root_agent = SupervisorAgent
+|
++-- run_parallel_pipeline (SequentialAgent)
+|   |
+|   +-- ParallelCollectAgent (ParallelAgent)
+|   |   |
+|   |   +-- NotionSearchAgent
+|   |   +-- FilesystemSearchAgent
+|   |
+|   +-- MergeAgent
+|   +-- SummaryOnlyAgent
+|
++-- run_sequential_pipeline (SequentialAgent)
+    |
+    +-- NotionSearchAgent
+    +-- MergeAgent
+    +-- SaveToFileAgent
+```
+
+라우팅 기준:
+
+- `run_parallel_pipeline`: Notion과 로컬 파일을 함께 조사, 비교, 통합할 때
+- `run_sequential_pipeline`: Notion 내용을 읽어 정리한 뒤 markdown 파일로 저장할 때
+
+
 
 ## 주요 파일
 
