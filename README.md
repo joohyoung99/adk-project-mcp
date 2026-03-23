@@ -8,18 +8,9 @@ Google ADK로 만든 CLI 챗봇입니다.
 
 ## 실행
 
-루트 `.env`에 아래 값을 둔다.
+루트 `.env`는 .env_sample 참고하세요
 
-```bash
-DATABASE_URL=postgresql+asyncpg://user:password@host:5432/database
-GOOGLE_API_KEY=...
-FILESYSTEM_ALLOWED_DIRS=/absolute/path/one,/absolute/path/two
-MODEL_GEMINI_2_5_FLASH=gemini-2.5-flash
-NOTION_MCP_URL=https://mcp.notion.com/mcp
-NOTION_CLIENT_NAME="ADK Project MCP CLI"
-NOTION_REDIRECT_HOST=127.0.0.1
-NOTION_REDIRECT_PORT=8787
-```
+
 
 Notion OAuth 로그인:
 
@@ -60,6 +51,24 @@ root_agent = SupervisorAgent
     +-- MergeAgent
     +-- SaveToFileAgent
 ```
+```mermaid
+flowchart TD
+A[SupervisorAgent<br/>root_agent]
+
+A --> B[run_parallel_pipeline<br/>SequentialAgent]
+A --> C[run_sequential_pipeline<br/>SequentialAgent]
+
+B --> D[ParallelCollectAgent<br/>ParallelAgent]
+B --> E[MergeAgent]
+B --> F[SummaryOnlyAgent]
+
+D --> G[NotionSearchAgent]
+D --> H[FilesystemSearchAgent]
+
+C --> I[NotionSearchAgent]
+C --> J[MergeAgent]
+C --> K[SaveToFileAgent]
+```
 
 라우팅 기준:
 
@@ -70,8 +79,15 @@ root_agent = SupervisorAgent
 
 ## 주요 파일
 
-- [main.py](/home/pachu/works/adk-project-mcp/main.py): CLI 실행과 이벤트 출력
-- [agent.py](/home/pachu/works/adk-project-mcp/agent.py): root/filesystem/notion agent 구성
-- [app/config/settings.py](/home/pachu/works/adk-project-mcp/app/config/settings.py): 환경 변수 로딩
+- [main.py](/home/pachu/works/adk-project-mcp/main.py): CLI 진입점
+- [agent.py](/home/pachu/works/adk-project-mcp/agent.py): `root_agent` export용 얇은 진입점
+- [app/agent/root.py](/home/pachu/works/adk-project-mcp/app/agent/root.py): `SupervisorAgent`, `root_agent`
+- [app/agent/workflows.py](/home/pachu/works/adk-project-mcp/app/agent/workflows.py): parallel/sequential workflow 정의
+- [app/agent/sub_agents.py](/home/pachu/works/adk-project-mcp/app/agent/sub_agents.py): NotionSearch, FilesystemSearch, Merge, SaveToFile, Summary agent 생성
+- [app/mcp/toolsets.py](/home/pachu/works/adk-project-mcp/app/mcp/toolsets.py): filesystem MCP, Notion MCP toolset 정의
+- [app/prompt/instructions.py](/home/pachu/works/adk-project-mcp/app/prompt/instructions.py): 각 agent instruction 모음
+- [app/tool/callbacks.py](/home/pachu/works/adk-project-mcp/app/tool/callbacks.py): tool callback 설정
+- [app/services/chat_cli.py](/home/pachu/works/adk-project-mcp/app/services/chat_cli.py): 대화 루프와 event 로그 출력
 - [app/services/notion_oauth.py](/home/pachu/works/adk-project-mcp/app/services/notion_oauth.py): OAuth 로그인과 토큰 refresh
+- [app/config/settings.py](/home/pachu/works/adk-project-mcp/app/config/settings.py): 환경 변수 로딩
 - [app/config/mcp_servers.example.json](/home/pachu/works/adk-project-mcp/app/config/mcp_servers.example.json): Notion MCP 설정 예시
