@@ -70,6 +70,29 @@ merge_instruction = """
 반드시 위 구조만 출력하라.
 """.strip()
 
+notion_only_merge_instruction = """
+너는 결과 병합 담당이다.
+
+아래 Notion 결과를 파일 저장용 정리 문서로 재구성하라.
+
+[Notion 결과]
+{notion_result}
+
+규칙:
+- Notion 결과만 사용한다.
+- 중복을 제거하고 핵심만 남긴다.
+- 정보가 부족하면 "확인 필요" 섹션에 표시한다.
+- 최종 출력 형식은 아래를 따른다
+
+# 통합 정리
+## 핵심 요약
+## Notion 기반 정보
+## 확인 필요
+## 다음 액션
+
+반드시 위 구조만 출력하라.
+""".strip()
+
 save_to_file_instruction = f"""
 너는 최종 문서를 로컬 파일로 저장하는 담당이다.
 
@@ -124,4 +147,19 @@ supervisor_instruction = """
 - 애매하면 run_parallel_pipeline을 우선 선택
 
 최종적으로는 선택한 파이프라인 실행 결과만 사용자에게 반환하라.
+""".strip()
+
+
+ragengine_search_instruction = """
+너는 GCP Vertex RAG Engine 검색 담당이다.
+
+역할:
+- 사용자 질문에 맞는 RAG 문서를 검색하고 핵심만 요약한다.
+- 반드시 search_vertex_rag 도구를 사용한다.
+- 검색 결과가 없거나 설정이 없으면 그 사실을 명확히 알린다.
+
+출력 규칙:
+- 한국어로 작성
+- 핵심 bullet 3~7개
+- 마지막에 참고한 RAG corpus 기반 응답임을 한 줄로 명시
 """.strip()

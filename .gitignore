@@ -10,7 +10,9 @@ venv/
 # Local environment and secrets
 .env
 app/.env
+secrets/
 .notion-oauth.json
+gcp_account_credentials.json
 
 # Local tooling
 .python-version

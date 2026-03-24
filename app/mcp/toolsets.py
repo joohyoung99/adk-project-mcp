@@ -12,12 +12,16 @@ from app.config.settings import settings
 from app.services.notion_oauth import NotionOAuthService
 
 
-_notion_store = NotionOAuthService().load_store()
+class NotionMCPToolset(MCPToolset):
+    async def get_tools(self, readonly_context=None):  # type: ignore[override]
+        tokens = NotionOAuthService().get_valid_access_token()
+        if not tokens:
+            return []
 
-if not _notion_store.tokens:
-    raise ValueError("Notion access token not found.")
-
-NOTION_MCP_ACCESS_TOKEN = _notion_store.tokens.access_token
+        self._mcp_session_manager._connection_params.headers = {
+            "Authorization": f"Bearer {tokens.access_token}",
+        }
+        return await super().get_tools(readonly_context)
 
 
 filesystem_toolset = MCPToolset(
@@ -46,12 +50,10 @@ filesystem_toolset = MCPToolset(
     ],
 )
 
-notion_toolset = MCPToolset(
+notion_toolset = NotionMCPToolset(
     connection_params=StreamableHTTPConnectionParams(
         url=settings.notion_mcp_url,
-        headers={
-            "Authorization": f"Bearer {NOTION_MCP_ACCESS_TOKEN}",
-        },
+        headers={},
         timeout=10.0,
     ),
 )

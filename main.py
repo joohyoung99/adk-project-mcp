@@ -8,7 +8,7 @@ from app.services.chat_cli import run_chat_cli
 from app.services.notion_oauth import NotionOAuthService
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args() -> str:
     parser = argparse.ArgumentParser(description="ADK MCP CLI")
     parser.add_argument(
         "command",
@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
         choices=["chat", "login-notion"],
         help="실행할 명령",
     )
-    return parser.parse_args()
+    return parser.parse_args().command
 
 
 def login_notion() -> None:
@@ -29,8 +29,8 @@ def login_notion() -> None:
 
 
 def main() -> None:
-    args = parse_args()
-    if args.command == "login-notion":
+    command = parse_args()
+    if command == "login-notion":
         login_notion()
         return
     asyncio.run(run_chat_cli())

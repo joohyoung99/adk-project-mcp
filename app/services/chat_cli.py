@@ -4,7 +4,7 @@ import json
 import uuid
 
 from google.adk.runners import Runner
-from google.adk.sessions import DatabaseSessionService
+from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.genai import types
 
 from agent import root_agent
