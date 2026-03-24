@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import uuid
 
 from google.adk.runners import Runner
 from google.adk.sessions import DatabaseSessionService
@@ -78,10 +79,10 @@ async def run_chat_cli() -> None:
         agent=root_agent,
         session_service=session_service,
     )
-    session = await ensure_session(
-        session_service=session_service,
+    session = await session_service.create_session(
+        app_name=settings.app_name,
         user_id=settings.default_user_id,
-        session_id=settings.default_session_id,
+        session_id=f"session-{uuid.uuid4()}",
     )
 
     print_banner(notion_connected=bool(notion_tokens))
