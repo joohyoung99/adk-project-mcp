@@ -29,9 +29,7 @@ def _filesystem_allowed_dirs() -> list[str]:
 @dataclass(frozen=True, slots=True)
 class Settings:
     app_name: str = "adk-project-mcp과제1"
-    default_session_id: str = "session-4"
     default_user_id: str = "jhpark"
-    samples_dir: Path = BASE_DIR / "samples"
     notion_oauth_store_path: Path = BASE_DIR / ".notion-oauth.json"
     model: str = os.getenv("MODEL_GEMINI_2_5_FLASH", "gemini-2.5-flash")
     filesystem_allowed_dirs: list[str] = None  # type: ignore[assignment]

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import uuid
 
 from google.adk.runners import Runner
@@ -16,26 +15,6 @@ from app.services.notion_oauth import NotionOAuthService
 def ensure_model_api_key() -> None:
     if not (settings.model):
         raise ValueError("GOOGLE_API_KEY 또는 GEMINI_API_KEY를 설정해야 합니다.")
-
-
-async def ensure_session(
-    session_service: DatabaseSessionService,
-    user_id: str,
-    session_id: str,
-):
-    session = await session_service.get_session(
-        app_name=settings.app_name,
-        user_id=user_id,
-        session_id=session_id,
-    )
-    if session:
-        return session
-
-    return await session_service.create_session(
-        app_name=settings.app_name,
-        user_id=user_id,
-        session_id=session_id,
-    )
 
 
 def _compact(value: object, limit: int = 700) -> str:
@@ -82,7 +61,7 @@ async def run_chat_cli() -> None:
     session = await session_service.create_session(
         app_name=settings.app_name,
         user_id=settings.default_user_id,
-        session_id=f"session-{uuid.uuid4()}",
+        session_id=str(uuid.uuid4()),
     )
 
     print_banner(notion_connected=bool(notion_tokens))
