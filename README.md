@@ -79,15 +79,15 @@ C --> K[SaveToFileAgent]
 
 ## 주요 파일
 
-- [main.py](/home/pachu/works/adk-project-mcp/main.py): CLI 진입점
-- [agent.py](/home/pachu/works/adk-project-mcp/agent.py): `root_agent` export용 얇은 진입점
-- [app/agent/root.py](/home/pachu/works/adk-project-mcp/app/agent/root.py): `SupervisorAgent`, `root_agent`
-- [app/agent/workflows.py](/home/pachu/works/adk-project-mcp/app/agent/workflows.py): parallel/sequential workflow 정의
-- [app/agent/sub_agents.py](/home/pachu/works/adk-project-mcp/app/agent/sub_agents.py): NotionSearch, FilesystemSearch, Merge, SaveToFile, Summary agent 생성
-- [app/mcp/toolsets.py](/home/pachu/works/adk-project-mcp/app/mcp/toolsets.py): filesystem MCP, Notion MCP toolset 정의
-- [app/prompt/instructions.py](/home/pachu/works/adk-project-mcp/app/prompt/instructions.py): 각 agent instruction 모음
-- [app/tool/callbacks.py](/home/pachu/works/adk-project-mcp/app/tool/callbacks.py): tool callback 설정
-- [app/services/chat_cli.py](/home/pachu/works/adk-project-mcp/app/services/chat_cli.py): 대화 루프와 event 로그 출력
-- [app/services/notion_oauth.py](/home/pachu/works/adk-project-mcp/app/services/notion_oauth.py): OAuth 로그인과 토큰 refresh
-- [app/config/settings.py](/home/pachu/works/adk-project-mcp/app/config/settings.py): 환경 변수 로딩
-- [app/config/mcp_servers.example.json](/home/pachu/works/adk-project-mcp/app/config/mcp_servers.example.json): Notion MCP 설정 예시
+- [main.py](main.py): CLI 진입점
+- [agent.py](agent.py): `root_agent` export용 얇은 진입점
+- [app/agent/root.py](app/agent/root.py): `SupervisorAgent`, `root_agent`
+- [app/agent/workflows.py](app/agent/workflows.py): parallel/sequential workflow 정의
+- [app/agent/sub_agents.py](app/agent/sub_agents.py): NotionSearch, FilesystemSearch, Merge, SaveToFile, Summary agent 생성
+- [app/mcp/toolsets.py](app/mcp/toolsets.py): filesystem MCP, Notion MCP toolset 정의
+- [app/prompt/instructions.py](app/prompt/instructions.py): 각 agent instruction 모음
+- [app/tool/callbacks.py](app/tool/callbacks.py): tool callback 설정
+- [app/services/chat_cli.py](app/services/chat_cli.py): 대화 루프와 event 로그 출력
+- [app/services/notion_oauth.py](app/services/notion_oauth.py): OAuth 로그인과 토큰 refresh
+- [app/config/settings.py](app/config/settings.py): 환경 변수 로딩
+- [app/config/mcp_servers.example.json](app/config/mcp_servers.example.json): Notion MCP 설정 예시
